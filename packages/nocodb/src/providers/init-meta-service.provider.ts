@@ -2,7 +2,7 @@ import { NcDebug } from 'nc-gui/utils/debug';
 import type { FactoryProvider } from '@nestjs/common';
 import type { IEventEmitter } from '~/modules/event-emitter/event-emitter.interface';
 import { verifyDefaultWorkspace } from '~/helpers/verifyDefaultWorkspace';
-import { isEE, T } from '~/utils';
+import { T } from '~/utils';
 import { populatePluginsForCloud } from '~/utils/cloud/populateCloudPlugins';
 import { MetaService } from '~/meta/meta.service';
 import Noco from '~/Noco';
@@ -97,7 +97,7 @@ export const InitMetaServiceProvider: FactoryProvider = {
     );
 
     Noco.firstEeLoad =
-      isEE && !v0TableExists && v2TableExists && !v3TableExists;
+      !v0TableExists && v2TableExists && !v3TableExists;
 
     await metaService.init();
 

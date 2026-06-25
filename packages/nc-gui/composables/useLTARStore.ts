@@ -61,9 +61,7 @@ const [useProvideLTARStore, useLTARStore] = useInjectionState(
       currentRow.value = row.value
     }
 
-    if (isEeUI) {
-      _reloadData = (_params: { shouldShowLoading?: boolean }) => {}
-    }
+    _reloadData = (_params: { shouldShowLoading?: boolean }) => {}
 
     // state
     const { getMeta, getMetaByKey, getPartialMeta, metas } = useMetas()

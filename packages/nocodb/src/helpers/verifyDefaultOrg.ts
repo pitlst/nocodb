@@ -30,9 +30,9 @@ export function isDuplicateKeyError(e: any): boolean {
  * Follows the same pattern as verifyDefaultWorkspace().
  */
 export const verifyDefaultOrg = async (ncMeta = Noco.ncMeta) => {
-  // Only create default org on licensed on-prem
-  // Cloud manages orgs explicitly, CE/unlicensed don't need it
-  if (!isOnPrem || !Noco.isEE()) {
+  // Only create default org on on-prem
+  // Cloud manages orgs explicitly
+  if (!isOnPrem) {
     return;
   }
 
@@ -223,8 +223,8 @@ export const ensureUserInDefaultOrg = async (
   role: EnterpriseOrgUserRoles = EnterpriseOrgUserRoles.VIEWER,
   ncMeta = Noco.ncMeta,
 ) => {
-  // Only on licensed on-prem
-  if (!isOnPrem || !Noco.isEE()) return;
+  // Only on on-prem
+  if (!isOnPrem) return;
 
   if (!Noco.ncDefaultOrgId) {
     await verifyDefaultOrg(ncMeta);

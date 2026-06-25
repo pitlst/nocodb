@@ -251,16 +251,11 @@ class Tele {
 
   static async payload() {
     // Skip telemetry payload in test/dev environments
-    // For EE builds: skip only when licensed (Noco.isEE()) or cloud — free/unlicensed users should send
     if (
       process.env.NODE_ENV === 'test' ||
       process.env.NODE_ENV === 'development'
     )
       return null;
-
-    // Lazy import to avoid circular dependency — Noco is not available at module load time
-    const { default: Noco } = await import('~/Noco');
-    if (Noco.isEE()) return null;
 
     const payload: Record<string, any> = {
       package_id: packageVersion,

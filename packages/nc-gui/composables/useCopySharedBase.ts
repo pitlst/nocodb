@@ -50,15 +50,14 @@ export const useCopySharedBase = createSharedComposable(() => {
     onComplete?: (status: 'success' | 'error') => void
     failedToastMessage?: string
   }) => {
-    if (!workspaceId && isEeUI) return
+    if (!workspaceId) return
 
     isLoading.value = true
 
     try {
       const jobData = await api.base.duplicateShared(workspaceId ?? 'nc', sharedBaseId.value, {
         options: optionsToExclude.value,
-        base: isEeUI
-          ? {
+        base: {
               fk_workspace_id: workspaceId,
               type: ProjectTypes.DATABASE,
             }
@@ -83,7 +82,7 @@ export const useCopySharedBase = createSharedComposable(() => {
           if (data.status !== 'close') {
             if (data.status === JobStatus.COMPLETED) {
               ncNavigateTo({
-                ...(isEeUI ? { workspaceId: jobData.fk_workspace_id } : {}),
+                workspaceId: jobData.fk_workspace_id,
                 baseId: jobData.base_id,
                 query: {
                   openTable: 'true',

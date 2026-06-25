@@ -35,7 +35,7 @@ import { NcRequest } from '~/interface/config';
 import { Integration } from '~/models';
 import { MetaTable, RootScopes } from '~/utils/globals';
 import { NcError } from '~/helpers/catchError';
-import { deepMerge, isEE } from '~/utils';
+import { deepMerge } from '~/utils';
 import Noco from '~/Noco';
 import { DataApiLimiterGuard } from '~/guards/data-api-limiter.guard';
 
@@ -222,7 +222,6 @@ export class UtilsController {
   async reportErrors(@Req() req: NcRequest, @Body() body: ErrorReportReqType) {
     if (
       `${process.env.NC_DISABLE_ERR_REPORTS}` === 'true' ||
-      isEE ||
       process.env.NC_SENTRY_DSN
     ) {
       return {};

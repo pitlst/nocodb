@@ -37,7 +37,7 @@ export const useBackToBase = ({ useFallback = true }: { useFallback?: boolean } 
     }
 
     navigateToProject({
-      workspaceId: isEeUI ? activeWorkspaceId.value : undefined,
+      workspaceId: activeWorkspaceId.value,
       baseId: lastVisitedBase.value.id,
     })
   }

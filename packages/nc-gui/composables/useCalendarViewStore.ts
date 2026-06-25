@@ -164,7 +164,7 @@ const [useProvideCalendarViewStore, useCalendarViewStore] = useInjectionState(
       return getTimeZoneFromName(calendarRange.value?.[0]?.fk_from_col?.meta?.timezone)?.name
     })
 
-    const timezoneDayjs = reactive(workerWithTimezone(calDataType.value === UITypes.Date ? false : isEeUI, timezone?.value))
+    const timezoneDayjs = reactive(workerWithTimezone(calDataType.value === UITypes.Date ? false : true, timezone?.value))
 
     const searchQuery = reactive({
       value: '',
@@ -1238,7 +1238,7 @@ const [useProvideCalendarViewStore, useCalendarViewStore] = useInjectionState(
 
     watch([timezone, calDataType], ([newTimezone, calDataType]) => {
       const temp = workerWithTimezone(
-        calDataType === UITypes.Date ? false : isEeUI,
+        calDataType === UITypes.Date ? false : true,
         calDataType === UITypes.Date ? null : newTimezone,
       )
       timezoneDayjs.dayjsTz = temp.dayjsTz

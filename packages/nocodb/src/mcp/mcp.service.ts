@@ -21,7 +21,6 @@ import { hasMinimumRole } from '~/utils/roleHelper';
 import NcPluginMgrv2 from '~/helpers/NcPluginMgrv2';
 import { serialize } from '~/helpers/serialize';
 import { AuditsService } from '~/services/audits.service';
-import { isEE } from '~/utils';
 import { aggregationDescription, whereDescription } from '~/mcp/descriptions';
 
 @Injectable()
@@ -521,8 +520,7 @@ export class McpService {
       },
     );
 
-    if (!isEE) {
-      server.registerTool(
+    server.registerTool(
         'aggregate_single',
         {
           title: 'Aggregate',
@@ -608,7 +606,6 @@ export class McpService {
           }
         },
       );
-    }
 
     if (isEditorPlus) {
       // Create Records tool

@@ -41,7 +41,7 @@ import {
 import Noco from '~/Noco';
 import { genJwt } from '~/services/users/helpers';
 import { addDummyRootAndNest } from '~/services/v3/filters-v3.helper';
-import { isEE, isOnPrem } from '~/utils';
+import { isOnPrem } from '~/utils';
 import { filterBuilder } from '~/utils/api-v3-data-transformation.builder';
 
 const webhookLogLevel =
@@ -284,7 +284,7 @@ export class WebhookInvoker {
         type: `${scope}.${hook.event}.${hook.operation}`,
         id: uuidv4(),
         base_id: model.base_id,
-        ...(includeUser && isEE && user
+        ...(includeUser && user
           ? { user: sanitizeUserForHook(user) }
           : {}),
         version: hook.version,
@@ -493,7 +493,7 @@ export class WebhookInvoker {
             const res = await (
               await NcPluginMgrv2.emailAdapter(false)
             )?.mailSend(parsedPayload);
-            if (webhookLogLevel === 'ALL' || (isEE && !webhookLogLevel)) {
+            if (webhookLogLevel === 'ALL' || !webhookLogLevel) {
               hookLog = {
                 ...hook,
                 operation: hookPayload.operation as any,
@@ -534,7 +534,7 @@ export class WebhookInvoker {
 
             if (
               webhookLogLevel === 'ALL' ||
-              (isEE && !webhookLogLevel) ||
+              !webhookLogLevel ||
               (webhookLogLevel === 'ERROR' && isBodyEmpty)
             ) {
               const emptyBodyError = isBodyEmpty
@@ -666,7 +666,7 @@ export class WebhookInvoker {
               ),
             );
 
-            if (webhookLogLevel === 'ALL' || (isEE && !webhookLogLevel)) {
+            if (webhookLogLevel === 'ALL' || !webhookLogLevel) {
               hookLog = {
                 ...hook,
                 operation: hookName?.split('.')?.[1] as any,
@@ -703,7 +703,7 @@ export class WebhookInvoker {
       } else {
         this.logger.debug(e.message, e.stack);
       }
-      if (['ERROR', 'ALL'].includes(webhookLogLevel) || isEE) {
+      if (['ERROR', 'ALL'].includes(webhookLogLevel) || true) {
         hookLog = {
           ...hook,
           operation: hookName?.split('.')?.[1] as any,
@@ -742,7 +742,7 @@ export class WebhookInvoker {
             e.response?.data?.message?.includes('private IP address')
           ) {
             errorMessage = `Connection to a private network IP is blocked for security reasons.`;
-            if (!isEE || isOnPrem) {
+            if (isOnPrem) {
               errorMessage += ` If this is intentional, set NC_ALLOW_LOCAL_HOOKS=true to allow local network webhooks.`;
             }
             throw new Error(errorMessage);

@@ -22,7 +22,7 @@ import {
   getUniqueColumnName,
 } from '~/helpers/getUniqueName';
 import { DriverClient } from '~/utils/nc-config';
-import { isEE } from '~/utils';
+
 
 export const repopulateCreateTableSystemColumns = (
   _context: NcContext,
@@ -39,7 +39,7 @@ export const repopulateCreateTableSystemColumns = (
   },
 ) => {
   const tableSystemColumns = TableSystemColumns(
-    isEE && clientType === DriverClient.PG,
+    clientType === DriverClient.PG,
     isMeta,
   );
 

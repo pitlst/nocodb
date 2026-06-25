@@ -16,9 +16,9 @@ export const verifyDefaultWorkspace = async (
   user?: User,
   ncMeta = Noco.ncMeta,
 ) => {
-  // Skip for cloud/pure EE — they manage workspaces via EE service.
-  // On-prem always needs a default workspace regardless of license state.
-  if (Noco.isEE() && !isOnPrem) {
+  // Skip for cloud — they manage workspaces via their own service.
+  // On-prem always needs a default workspace.
+  if (!isOnPrem) {
     return;
   }
 
@@ -101,8 +101,8 @@ export const verifyDefaultWorkspace = async (
 };
 
 export const verifyDefaultWsOwner = async (ncMeta = Noco.ncMeta) => {
-  // Skip for cloud/pure EE — on-prem always needs default workspace owner
-  if (Noco.isEE() && !isOnPrem) {
+  // Skip for cloud — on-prem always needs default workspace owner
+  if (!isOnPrem) {
     return;
   }
 
@@ -164,8 +164,8 @@ export const ensureUserInDefaultWorkspace = async (
   role: WorkspaceUserRoles = WorkspaceUserRoles.NO_ACCESS,
   ncMeta = Noco.ncMeta,
 ) => {
-  // Cloud EE manages workspace membership via its own service
-  if (Noco.isEE() && !isOnPrem) return;
+  // Cloud manages workspace membership via its own service
+  if (!isOnPrem) return;
 
   if (!Noco.ncDefaultWorkspaceId) {
     await verifyDefaultWorkspace(undefined, ncMeta);

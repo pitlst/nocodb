@@ -4,7 +4,6 @@ import { MetaTable, RootScopes } from '~/utils/globals';
 import Noco from '~/Noco';
 import { extractProps } from '~/helpers/extractProps';
 import { NcError } from '~/helpers/catchError';
-import { isEE } from '~/utils';
 import {
   IntegrationSlotTypes,
   STORE_DEFINITIONS,
@@ -72,7 +71,7 @@ export default class IntegrationStore {
 
     const insertObj = extractProps(data, [...storeKeys]);
 
-    if (isEE && !context.workspace_id) {
+    if (!context.workspace_id) {
       NcError.badRequest('Missing required fields');
     }
 

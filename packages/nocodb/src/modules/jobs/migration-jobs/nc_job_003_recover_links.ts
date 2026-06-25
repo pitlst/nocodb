@@ -4,7 +4,6 @@ import { RelationTypes, UITypes } from 'nocodb-sdk';
 import type { MetaService } from '~/meta/meta.service';
 import Noco from '~/Noco';
 import { MetaTable } from '~/utils/globals';
-import { isEE } from '~/utils';
 import { Column } from '~/models';
 
 /**
@@ -237,9 +236,7 @@ export class RecoverLinksMigration {
               base_id: link.base_id,
             };
 
-            if (isEE) {
-              commonProps.fk_workspace_id = link.fk_workspace_id;
-            }
+            commonProps.fk_workspace_id = link.fk_workspace_id;
 
             // based on type insert data into colOptions
             switch (link.type) {

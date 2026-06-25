@@ -371,7 +371,7 @@ export const getDateTimeValue = (modelValue: string | null, params: ParsePlainCe
   const dateFormat = columnMeta?.date_format ?? dateFormats[0]
   const timeFormat = columnMeta?.time_format ?? timeFormats[0]
   const dateTimeFormat = `${dateFormat} ${timeFormat}`
-  const timezone = isEeUI && columnMeta?.timezone ? getTimeZoneFromName(columnMeta?.timezone) : undefined
+  const timezone = columnMeta?.timezone ? getTimeZoneFromName(columnMeta?.timezone) : undefined
   const { timezonize } = withTimezone(timezone?.name)
   const displayTimezone = timezone && columnMeta?.isDisplayTimezone ? ` (${timezone.abbreviation})` : ''
 

@@ -50,7 +50,6 @@ import { Source } from '~/models';
 import { cleanBaseSchemaCacheForBase } from '~/helpers/scriptHelper';
 import { clearSingleQueryCacheForReferencingModels } from '~/helpers/singleQueryCacheInvalidator';
 import { dataWrapper } from '~/helpers/dbHelpers';
-import { isEE } from '~/utils';
 import { NcCache } from '~/decorators/nc-cache.decorator';
 import {
   modelOrViewNotDeletedXcCondition,
@@ -270,9 +269,7 @@ export default class Model implements TableType {
       base_id: baseId,
     };
 
-    if (isEE) {
-      condition.fk_workspace_id = context.workspace_id;
-    }
+    condition.fk_workspace_id = context.workspace_id;
 
     if (!insertObj.order) {
       insertObj.order = await ncMeta.metaGetNextOrder(

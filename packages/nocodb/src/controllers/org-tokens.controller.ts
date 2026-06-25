@@ -11,8 +11,6 @@ import {
 } from '@nestjs/common';
 import { ApiTokenReqType } from 'nocodb-sdk';
 import { AuthGuard } from '@nestjs/passport';
-import { getConditionalHandler } from '~/helpers/getHandler';
-import { OrgTokensEeService } from '~/services/org-tokens-ee.service';
 import { OrgTokensService } from '~/services/org-tokens.service';
 import { Acl } from '~/middlewares/extract-ids/extract-ids.middleware';
 import { MetaApiLimiterGuard } from '~/guards/meta-api-limiter.guard';
@@ -23,7 +21,6 @@ import { NcRequest } from '~/interface/config';
 export class OrgTokensController {
   constructor(
     private readonly orgTokensService: OrgTokensService,
-    private readonly orgTokensEeService: OrgTokensEeService,
   ) {}
 
   @Get('/api/v1/tokens')
@@ -33,10 +30,7 @@ export class OrgTokensController {
     blockOAuthTokenAccess: true,
   })
   async apiTokenList(@Req() req: NcRequest) {
-    return await getConditionalHandler(
-      this.orgTokensService.apiTokenList,
-      this.orgTokensEeService.apiTokenListEE,
-    )({
+    return await this.orgTokensService.apiTokenList({
       query: req.query,
       req: req,
       user: req['user'],

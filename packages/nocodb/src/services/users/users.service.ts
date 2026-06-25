@@ -18,7 +18,7 @@ import {
   verifyDefaultWorkspace,
 } from '~/helpers/verifyDefaultWorkspace';
 import { ensureUserInDefaultOrg } from '~/helpers/verifyDefaultOrg';
-import { isEE, isOnPrem, sanitiseUserObj, T } from '~/utils';
+import { isOnPrem, sanitiseUserObj, T } from '~/utils';
 import {
   clearAuthCookie,
   genJwt,
@@ -199,7 +199,7 @@ export class UsersService {
     // if first user and super admin, create a base
     // On unlicensed on-prem (EE build), @EEOnly() falls back to this CE code,
     // so on-prem also needs workspace + base creation here.
-    if (isFirstUser && (!isEE || isOnPrem)) {
+    if (isFirstUser) {
       await verifyDefaultWorkspace(user, ncMeta);
       await ensureUserInDefaultOrg(user.id, undefined, ncMeta);
 

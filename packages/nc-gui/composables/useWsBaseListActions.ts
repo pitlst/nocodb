@@ -28,8 +28,7 @@ const [useProvideWsBaseListActions, useWsBaseListActions] = useInjectionState((c
   const updateBaseInWorkspace = (base: NcProject, updates: Partial<NcProject>) => {
     const workspaceId = base.fk_workspace_id!
 
-    if (isEeUI) {
-      const workspaceBases = workspaceBasesMap.value.get(workspaceId)
+    const workspaceBases = workspaceBasesMap.value.get(workspaceId)
       if (workspaceBases && base.id) {
         const existingBase = workspaceBases.get(base.id)
         if (existingBase) {
@@ -38,7 +37,7 @@ const [useProvideWsBaseListActions, useWsBaseListActions] = useInjectionState((c
       }
     }
 
-    if (!isEeUI || activeWorkspaceId.value === workspaceId) {
+    if (activeWorkspaceId.value === workspaceId) {
       bases.value.set(base.id!, { ...(bases.value.get(base.id!) || base), ...updates })
     }
   }
@@ -141,7 +140,7 @@ const [useProvideWsBaseListActions, useWsBaseListActions] = useInjectionState((c
     $e('a:workspace:base:select')
     closeModal()
 
-    if (isEeUI && base.fk_workspace_id !== activeWorkspaceId.value) {
+    if (base.fk_workspace_id !== activeWorkspaceId.value) {
       isProjectsLoaded.value = false
     }
 

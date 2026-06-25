@@ -5,7 +5,6 @@ import NocoCache from '~/cache/NocoCache';
 import { extractProps } from '~/helpers/extractProps';
 import { CacheGetType, CacheScope, MetaTable } from '~/utils/globals';
 import { parseMetaProp, stringifyMetaProp } from '~/utils/modelUtils';
-import { isEE } from '~/utils';
 import Filter from '~/models/Filter';
 
 export default class ButtonColumn {
@@ -62,7 +61,7 @@ export default class ButtonColumn {
         ? urlProps
         : buttonColumn.type === ButtonActionsType.Webhook
         ? webhookProps
-        : buttonColumn.type === ButtonActionsType.Script && isEE
+        : buttonColumn.type === ButtonActionsType.Script
         ? scriptProps
         : buttonColumn.type === ButtonActionsType.Ai
         ? aiProps
@@ -163,7 +162,7 @@ export default class ButtonColumn {
         ? urlProps
         : button.type === ButtonActionsType.Webhook
         ? webhookProps
-        : button.type === ButtonActionsType.Script && isEE
+        : button.type === ButtonActionsType.Script
         ? scriptProps
         : button.type === ButtonActionsType.Ai
         ? aiProps

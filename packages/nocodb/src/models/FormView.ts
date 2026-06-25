@@ -13,7 +13,6 @@ import View from '~/models/View';
 import { extractProps } from '~/helpers/extractProps';
 import { isSafeRedirectUrl } from '~/helpers/isSafeRedirectUrl';
 import { NcError } from '~/helpers/catchError';
-import { isEE } from '~/utils';
 import NocoCache from '~/cache/NocoCache';
 import Noco from '~/Noco';
 import { deserializeJSON, serializeJSON } from '~/utils/serialize';
@@ -299,8 +298,6 @@ export default class FormView implements FormViewType {
     viewId: string,
     ncMeta = Noco.ncMeta,
   ) {
-    if (!isEE) return;
-
     const formView = await this.get(context, viewId, ncMeta);
     if (!formView) return;
 

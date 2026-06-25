@@ -75,7 +75,6 @@ import {
 } from '~/utils/modelUtils';
 import { CustomUrl, LinkToAnotherRecordColumn } from '~/models';
 import { cleanCommandPaletteCache } from '~/helpers/commandPaletteHelpers';
-import { isEE } from '~/utils';
 import { cleanBaseSchemaCacheForBase } from '~/helpers/scriptHelper';
 import NocoSocket from '~/socket/NocoSocket';
 import {
@@ -1895,7 +1894,7 @@ export default class View implements ViewType {
       MetaTable.VIEWS,
       {
         uuid: null,
-        ...(isEE ? { fk_custom_url_id: null } : {}),
+        { fk_custom_url_id: null },
       },
       viewId,
     );
@@ -1904,7 +1903,7 @@ export default class View implements ViewType {
 
     await NocoCache.update(context, `${CacheScope.VIEW}:${viewId}`, {
       uuid: null,
-      ...(isEE ? { fk_custom_url_id: null } : {}),
+      { fk_custom_url_id: null },
     });
   }
 
@@ -1942,10 +1941,11 @@ export default class View implements ViewType {
       'uuid',
       'row_coloring_mode',
       'allow_sync',
-      ...(isEE ? ['fk_custom_url_id'] : []),
-      ...(isEE ? ['fk_view_section_id'] : []),
+      'fk_custom_url_id',
+      'fk_view_section_id',
       ...(includeCreatedByAndUpdateBy ? ['owned_by', 'created_by'] : []),
-      ...(isEE ? ['expanded_record_mode', 'attachment_mode_column_id'] : []),
+      'expanded_record_mode',
+      'attachment_mode_column_id',
     ]);
 
     // Password handling:
@@ -1962,12 +1962,10 @@ export default class View implements ViewType {
       updateObj.password = await bcrypt.hash(updateObj.password, 10);
     }
 
-    if (isEE) {
-      if (!updateObj?.attachment_mode_column_id) {
-        updateObj.expanded_record_mode = ExpandedFormMode.FIELD;
-      } else {
-        updateObj.expanded_record_mode = ExpandedFormMode.ATTACHMENT;
-      }
+    if (!updateObj?.attachment_mode_column_id) {
+      updateObj.expanded_record_mode = ExpandedFormMode.FIELD;
+    } else {
+      updateObj.expanded_record_mode = ExpandedFormMode.ATTACHMENT;
     }
 
     const oldView = await this.get(context, viewId, false, ncMeta);
@@ -2239,7 +2237,7 @@ export default class View implements ViewType {
     // on update, delete any optimised single query cache
     await View.clearSingleQueryCache(context, view.fk_model_id, [view], ncMeta);
 
-    if (isEE && view.fk_custom_url_id) {
+    if (view.fk_custom_url_id) {
       CustomUrl.delete({ id: view.fk_custom_url_id as string }).catch(() => {
         logger.error(`Failed to delete custom urls of viewId: ${view.id}`);
       });
@@ -2606,8 +2604,6 @@ export default class View implements ViewType {
     views?: { id?: string }[],
     ncMeta = Noco.ncMeta,
   ) {
-    if (!Noco.isEE()) return;
-
     // get all views of the model
     let viewsList =
       views ||
@@ -2990,21 +2986,15 @@ export default class View implements ViewType {
       'created_by',
       'owned_by',
       'lock_type',
-      ...(isEE
-        ? [
-            'expanded_record_mode',
-            'attachment_mode_column_id',
-            'row_coloring_mode',
-          ]
-        : []),
+      'expanded_record_mode',
+      'attachment_mode_column_id',
+      'row_coloring_mode',
     ]);
 
-    if (isEE) {
-      if (!insertObj?.attachment_mode_column_id) {
-        insertObj.expanded_record_mode = ExpandedFormMode.FIELD;
-      } else {
-        insertObj.expanded_record_mode = ExpandedFormMode.ATTACHMENT;
-      }
+    if (!insertObj?.attachment_mode_column_id) {
+      insertObj.expanded_record_mode = ExpandedFormMode.FIELD;
+    } else {
+      insertObj.expanded_record_mode = ExpandedFormMode.ATTACHMENT;
     }
 
     if (!insertObj.order) {

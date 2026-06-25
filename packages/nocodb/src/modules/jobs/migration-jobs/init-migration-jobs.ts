@@ -22,7 +22,6 @@ import { SoftDeleteColumnMigration } from '~/modules/jobs/migration-jobs/nc_job_
 import { NormalizeSoftDeleteSqliteMigration } from '~/modules/jobs/migration-jobs/nc_job_011_normalize_soft_delete_sqlite';
 import { RecordTrashBackfillMigration } from '~/modules/jobs/migration-jobs/nc_job_012_record_trash_backfill';
 import { CleanupOrphanCrossBaseLinksMigration } from '~/modules/jobs/migration-jobs/nc_job_013_cleanup_orphan_cross_base_links';
-import { isEE } from '~/utils';
 
 @Injectable()
 export class InitMigrationJobs {
@@ -50,17 +49,17 @@ export class InitMigrationJobs {
     {
       version: '5',
       job: MigrationJobTypes.NoOpMigration,
-      service: isEE ? this.orderColumnMigration : this.noOpMigration,
+      service: this.orderColumnMigration,
     },
     {
       version: '6',
       job: MigrationJobTypes.OrderColumnCreation,
-      service: isEE ? this.noOpMigration : this.orderColumnMigration,
+      service: this.noOpMigration,
     },
     {
       version: '7',
       job: MigrationJobTypes.RecoverOrderColumnMigration,
-      service: isEE ? this.noOpMigration : this.recoverOrderColumnMigration,
+      service: this.noOpMigration,
     },
     {
       version: '8',

@@ -241,11 +241,6 @@ function resolveDisplayValueColumnOrThrow(
   requestedId: string | null | undefined,
 ): string | null {
   if (!requestedId) return null;
-  if (!Noco.isEE()) {
-    NcError.get(context).badRequest(
-      'Custom display value field is an enterprise feature',
-    );
-  }
   const col = relatedTable.columns?.find((c) => c.id === requestedId);
   if (!col) return null;
   if (!isSupportedDisplayValueColumn(col)) {
@@ -269,9 +264,7 @@ async function clearDependentLookupModelCaches(
   ltarColumn: Column,
   ncMeta = Noco.ncMeta,
 ) {
-  // The compiled single-query cache is EE-only (clearSingleQueryCache no-ops
-  // in CE) — skip the dependency walk entirely there.
-  if (!Noco.isEE()) return;
+  // The compiled single-query cache walks the dependency graph.
 
   const contexts: NcContext[] = [context];
   const discoveredModels = new Set<string>();
@@ -486,7 +479,7 @@ const generateColumnDeleteHandler = (
  *
  * Also enforces that smartMode is only enabled on internal PostgreSQL sources:
  * the runtime read/write paths use `nc_row_meta` JSONB (added only when
- * `isEE && clientType === PG` in tableHelpers) and PG-specific JSONB
+ * `clientType === PG` in tableHelpers) and PG-specific JSONB
  * operators in prepareMetaUpdateQuery. Allowing smartMode on SQLite/MySQL
  * meta DBs creates a column the user can never use (no nc_row_meta) and on
  * EE with non-PG meta DB triggers a runtime crash.

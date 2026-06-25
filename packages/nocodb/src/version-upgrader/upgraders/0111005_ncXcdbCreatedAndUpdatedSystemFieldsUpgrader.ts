@@ -377,8 +377,7 @@ export default async function ({ ncMeta }: NcUpgraderCtx) {
           eq: 1,
         },
       },
-      ...(Noco.isEE()
-        ? [
+      [
             {
               is_local: {
                 eq: 1,

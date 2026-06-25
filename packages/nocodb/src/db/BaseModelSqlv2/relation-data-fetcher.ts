@@ -49,9 +49,7 @@ export const relationDataFetcher = (param: {
       query: any;
     },
   ) {
-    if (Noco.isEE()) {
-      return data;
-    }
+    return data;
 
     const { ast, parsedQuery } = await getAst(context, {
       model,

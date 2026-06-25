@@ -38,17 +38,6 @@ class ErrorReporting {
 }
 
 export default defineNuxtPlugin((nuxtApp) => {
-  if (isEeUI) {
-    nuxtApp.provide('report', function (error: Error) {
-      try {
-        Sentry.captureException(error)
-      } catch {
-        // ignore
-      }
-    })
-    return
-  }
-
   const config = useRuntimeConfig()
   const env = process.env.NODE_ENV === 'production' ? 'production' : 'development'
   let isSentryConfigured = false

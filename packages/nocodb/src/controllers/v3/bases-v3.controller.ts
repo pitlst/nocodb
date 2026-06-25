@@ -18,18 +18,15 @@ import { MetaApiLimiterGuard } from '~/guards/meta-api-limiter.guard';
 import { TenantContext } from '~/decorators/tenant-context.decorator';
 import { NcContext, NcRequest } from '~/interface/config';
 import { BasesV3Service } from '~/services/v3/bases-v3.service';
-import { isEE } from '~/utils';
 
-// decide scope based on whether it's EE or CE
-const BASE_SCOPE = isEE ? 'workspace' : 'org';
+const BASE_SCOPE = 'workspace';
 
 @UseGuards(MetaApiLimiterGuard, GlobalGuard)
 @Controller()
 export class BasesV3Controller {
   constructor(protected readonly baseV3Service: BasesV3Service) {}
 
-  // decide permission name based on whether it's EE or CE
-  @Acl(isEE ? 'workspaceBaseList' : 'baseList', {
+  @Acl('workspaceBaseList', {
     scope: BASE_SCOPE,
   })
   @Get('/api/v3/meta/workspaces/:workspaceId/bases')

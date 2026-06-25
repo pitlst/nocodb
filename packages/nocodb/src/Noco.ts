@@ -22,7 +22,7 @@ import type { OperationLogsService } from '~/meta/operation-logs.service';
 import type { AppSettings } from '~/interface/AppSettings';
 import { MetaTable, RootScopes } from '~/utils/globals';
 import { AppModule } from '~/app.module';
-import { isEE, T } from '~/utils';
+import { T } from '~/utils';
 import { getAppUrl } from '~/utils/appUrl';
 import { DataReflection, Integration, Store } from '~/models';
 import { getRedisURL } from '~/helpers/redisHelpers';
@@ -149,14 +149,11 @@ export default class Noco {
   }
 
   public static isEE(): boolean {
-    return this.ee || process.env.NC_CLOUD === 'true';
+    return true;
   }
 
   public static async loadEEState(): Promise<boolean> {
-    try {
-      return (this.ee = isEE);
-    } catch {}
-    return (this.ee = false);
+    return true;
   }
 
   static async init(param: any, httpServer: http.Server, server: Express) {

@@ -39,7 +39,7 @@ const [useProvideRowComments, useRowComments] = useInjectionState((meta: Ref<Tab
           NcMarkdownParser.parse(
             commentValue,
             {
-              enableMention: !!isEeUI,
+              enableMention: true,
               users: unref(baseUsers.value),
               currentUser: unref(user.value),
             },

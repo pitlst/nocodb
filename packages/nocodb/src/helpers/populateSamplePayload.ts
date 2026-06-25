@@ -8,7 +8,6 @@ import type {
 import type { NcContext } from '~/interface/config';
 import { Column, Model, View } from '~/models';
 import { sanitizeUserForHook } from '~/helpers/webhookHelpers';
-import { isEE } from '~/utils';
 
 export async function populateSamplePayload(
   context: NcContext,
@@ -100,7 +99,7 @@ export async function populateSamplePayloadView(
   const samplePayload = {
     type: `view.after.${operation}`,
     id: uuidv4(),
-    ...(includeUser && isEE && sampleUser
+    ...(includeUser && sampleUser
       ? { user: sanitizeUserForHook(sampleUser) }
       : {}),
     ...(version === 'v3' ? { version } : {}),
@@ -164,7 +163,7 @@ export async function populateSamplePayloadV2(
   const samplePayload = {
     type: `${scope}.after.${operation}`,
     id: uuidv4(),
-    ...(includeUser && isEE && sampleUser
+    ...(includeUser && sampleUser
       ? { user: sanitizeUserForHook(sampleUser) }
       : {}),
     ...(version === 'v3' ? { version } : {}),

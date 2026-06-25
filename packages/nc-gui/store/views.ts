@@ -208,12 +208,12 @@ export const useViewsStore = defineStore('viewsStore', () => {
 
   const isActiveViewFieldHeaderVisible = computed(() => {
     // If card field header visibility is not enabled or blocked, return true to show header by default
-    if (blockCardFieldHeaderVisibility.value || !isEeUI) return true
+    if (blockCardFieldHeaderVisibility.value) return true
 
     return parseProp((activeView.value?.view as GalleryType | KanbanType)?.meta)?.is_field_header_visible ?? true
   })
 
-  const isListViewEnabled = computed(() => isEeUI && showEEFeatures.value)
+  const isListViewEnabled = computed(() => showEEFeatures.value)
 
   const isShowEveryonePersonalViewsEnabled = computed({
     get: () => {
@@ -1071,10 +1071,7 @@ export const useViewsStore = defineStore('viewsStore', () => {
   }
 
   const setCurrentViewExpandedFormMode = async (viewId: string, mode: 'field' | 'attachment', columnId?: string) => {
-    /**
-     * Update value only if it is EeUI and active view
-     */
-    if (!isEeUI || !viewId || activeView.value?.id !== viewId) return
+    if (!viewId || activeView.value?.id !== viewId) return
 
     try {
       if (isUIAllowed('viewCreateOrEdit')) {
@@ -1090,10 +1087,7 @@ export const useViewsStore = defineStore('viewsStore', () => {
   }
 
   const setCurrentViewExpandedFormAttachmentColumn = async (viewId: string, columnId: string) => {
-    /**
-     * Update value only if it is EeUI and active view
-     */
-    if (!isEeUI || !viewId || activeView.value?.id !== viewId) return
+    if (!viewId || activeView.value?.id !== viewId) return
 
     try {
       if (isUIAllowed('viewCreateOrEdit')) {
@@ -1188,7 +1182,7 @@ export const useViewsStore = defineStore('viewsStore', () => {
     const result = {
       isDisabled: false,
       tooltip: '',
-      isVisible: isEeUI && isUIAllowed('viewCreateOrEdit') && showEEFeatures.value,
+      isVisible: isUIAllowed('viewCreateOrEdit') && showEEFeatures.value,
     }
 
     if (!view) return result
@@ -1231,7 +1225,7 @@ export const useViewsStore = defineStore('viewsStore', () => {
     destView?: ViewType
     onCopy?: (selectedCopyViewConfigTypes: ViewSettingOverrideOptions[]) => void
   } = {}) => {
-    if (!destView || !isEeUI || !isUIAllowed('viewCreateOrEdit')) return
+    if (!destView || !isUIAllowed('viewCreateOrEdit')) return
 
     // If destination view is locked or if personal and user is not the owner or if table has only one view then return
     if (getCopyViewConfigBtnAccessStatus(destView).isDisabled) {

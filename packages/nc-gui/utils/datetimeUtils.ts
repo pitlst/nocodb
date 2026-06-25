@@ -98,5 +98,5 @@ export function getTimeZoneFromName(name: string = Intl.DateTimeFormat().resolve
 }
 
 export function withTimezone(timezone?: string) {
-  return workerWithTimezone(isEeUI, timezone)
+  return workerWithTimezone(true, timezone)
 }

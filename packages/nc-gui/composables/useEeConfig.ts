@@ -27,7 +27,7 @@ export const useEeConfig = createSharedComposable(() => {
 
   const isLoyaltyDiscountAvailable = computed(() => false)
 
-  const isPaymentEnabled = computed(() => false)
+  const isPaymentEnabled = computed(() => true)
 
   const blockAddNewRecord = computed(() => false)
 
@@ -37,7 +37,7 @@ export const useEeConfig = createSharedComposable(() => {
 
   const gracePeriodEndDate = computed(() => '')
 
-  const isWsAuditEnabled = computed(() => false)
+  const isWsAuditEnabled = computed(() => true)
 
   const isAllowToAddExtension = computed(() => true)
 
@@ -53,35 +53,35 @@ export const useEeConfig = createSharedComposable(() => {
 
   const isTopBannerVisible = computed(() => false)
 
-  const blockWsImageLogoUpload = computed(() => true)
+  const blockWsImageLogoUpload = computed(() => false)
 
   const blockCurrentUserFilter = computed(() => false)
 
-  const blockRowColoring = computed(() => true)
+  const blockRowColoring = computed(() => false)
 
-  const blockToggleFilter = computed(() => true)
+  const blockToggleFilter = computed(() => false)
 
-  const blockToggleGroupBy = computed(() => true)
+  const blockToggleGroupBy = computed(() => false)
 
-  const blockToggleSort = computed(() => true)
+  const blockToggleSort = computed(() => false)
 
-  const blockPinnedFilter = computed(() => true)
+  const blockPinnedFilter = computed(() => false)
 
-  const blockCellColoring = computed(() => true)
+  const blockCellColoring = computed(() => false)
 
-  const blockTableAndFieldPermissions = computed(() => true)
+  const blockTableAndFieldPermissions = computed(() => false)
 
-  const blockPrivateBases = computed(() => true)
+  const blockPrivateBases = computed(() => false)
 
-  const blockAddNewDashboard = computed(() => true)
+  const blockAddNewDashboard = computed(() => false)
 
-  const blockCalendarRange = computed(() => true)
+  const blockCalendarRange = computed(() => false)
 
-  const blockTimelineView = computed(() => true)
+  const blockTimelineView = computed(() => false)
 
-  const blockGanttView = computed(() => true)
+  const blockGanttView = computed(() => false)
 
-  const blockAddNewScript = computed(() => true)
+  const blockAddNewScript = computed(() => false)
 
   const showUserMayChargeAlert = computed(() => false)
 
@@ -90,55 +90,53 @@ export const useEeConfig = createSharedComposable(() => {
     return Math.max(1, +appInfo.value.ncMaxAttachmentsAllowed || 50)
   })
 
-  const blockAiPromptField = computed(() => true)
+  const blockAiPromptField = computed(() => false)
 
-  const blockAiButtonField = computed(() => true)
+  const blockAiButtonField = computed(() => false)
 
-  const blockAiChat = computed(() => true)
+  const blockAiChat = computed(() => false)
 
-  const blockAiIntegrations = computed(() => true)
+  const blockAiIntegrations = computed(() => false)
 
-  const blockAiIntegrationsLimit = computed(() => true)
+  const blockAiIntegrationsLimit = computed(() => false)
 
-  const blockDocAi = computed(() => true)
+  const blockDocAi = computed(() => false)
 
-  const blockButtonVisibility = computed(() => true)
+  const blockButtonVisibility = computed(() => false)
 
-  const blockTableVisibility = computed(() => true)
+  const blockTableVisibility = computed(() => false)
 
-  const blockFieldVisibility = computed(() => true)
+  const blockFieldVisibility = computed(() => false)
 
-  const blockColourField = computed(() => true)
+  const blockColourField = computed(() => false)
 
-  const blockTeamHierarchy = computed(() => true)
+  const blockTeamHierarchy = computed(() => false)
 
-  const blockTeamsManagement = computed(() => true)
+  const blockTeamsManagement = computed(() => false)
 
-  const blockAddNewTeamToWs = computed(() => true)
+  const blockAddNewTeamToWs = computed(() => false)
 
-  const blockCardFieldHeaderVisibility = computed(() => true)
+  const blockCardFieldHeaderVisibility = computed(() => false)
 
-  const blockAddNewSandbox = computed(() => true)
+  const blockAddNewSandbox = computed(() => false)
 
-  const blockSync = computed(() => true)
+  const blockSync = computed(() => false)
 
-  const blockTableSync = computed(() => true)
+  const blockTableSync = computed(() => false)
 
-  const blockTableSyncAuto = computed(() => true)
+  const blockTableSyncAuto = computed(() => false)
 
-  const blockCustomSync = computed(() => true)
+  const blockCustomSync = computed(() => false)
 
-  const blockUnique = computed(() => true)
+  const blockUnique = computed(() => false)
 
-  // UUID field is EE-only — always blocked in CE
-  const blockUuidField = computed(() => true)
+  const blockUuidField = computed(() => false)
 
-  const blockListView = computed(() => true)
+  const blockListView = computed(() => false)
 
-  const blockMapView = computed(() => true)
+  const blockMapView = computed(() => false)
 
-  // AutoNumber field is EE-only — always blocked in CE
-  const blockAutoNumberField = computed(() => true)
+  const blockAutoNumberField = computed(() => false)
 
   const calculatePrice = (..._args: any[]) => {}
 
@@ -210,7 +208,7 @@ export const useEeConfig = createSharedComposable(() => {
 
   const showUpgradeToAddAiIntegration = (..._args: any[]) => {}
 
-  const blockDocumentPermissions = computed(() => true)
+  const blockDocumentPermissions = computed(() => false)
 
   const showUpgradeToUseDocumentPermissions = (..._args: any[]) => {}
 
@@ -218,17 +216,17 @@ export const useEeConfig = createSharedComposable(() => {
 
   const showUpgradeToAddMoreAttachmentsInCell = (..._args: any[]) => {}
 
-  const blockDocs = computed(() => true)
+  const blockDocs = computed(() => false)
 
   const showUpgradeToUseDocs = (..._args: any[]) => {}
 
-  const blockDocsInlineComments = computed(() => true)
+  const blockDocsInlineComments = computed(() => false)
 
-  const blockDocsResolveComments = computed(() => true)
+  const blockDocsResolveComments = computed(() => false)
 
-  const blockDocsExportPdf = computed(() => true)
+  const blockDocsExportPdf = computed(() => false)
 
-  const blockDocShare = computed(() => true)
+  const blockDocShare = computed(() => false)
 
   const showUpgradeToShareDoc = (..._args: any[]) => {}
 
@@ -288,7 +286,7 @@ export const useEeConfig = createSharedComposable(() => {
 
   const blockRecordTemplates = computed(() => false)
 
-  const blockRls = computed(() => true)
+  const blockRls = computed(() => false)
 
   const showUpgradeToUseRecordTemplates = (..._args: any[]) => {}
 
@@ -298,15 +296,15 @@ export const useEeConfig = createSharedComposable(() => {
 
   const showUpgradeToDuplicateTableToOtherBase = (..._args: any[]) => {}
 
-  const blockFormScheduling = computed(() => true)
+  const blockFormScheduling = computed(() => false)
 
   const showUpgradeToUseFormScheduling = (..._args: any[]) => {}
 
-  const blockViewSections = computed(() => true)
+  const blockViewSections = computed(() => false)
 
   const showUpgradeToUseViewSections = (..._args: any[]) => {}
 
-  const blockBaseVariables = computed(() => true)
+  const blockBaseVariables = computed(() => false)
 
   const showUpgradeToUseBaseVariables = (..._args: any[]) => {}
 
@@ -315,22 +313,22 @@ export const useEeConfig = createSharedComposable(() => {
 
   const showUpgradeToUseMapView = (..._args: any[]) => {}
 
-  const blockDateDependency = computed(() => true)
+  const blockDateDependency = computed(() => false)
 
   const showUpgradeToUseDateDependency = (..._args: any[]) => {}
 
   const showUpgradeToUseExtensions = (..._args: any[]) => {}
-  const blockMfa = computed(() => true)
+  const blockMfa = computed(() => false)
   const showUpgradeToUseMfa = (..._args: any[]) => {}
 
-  const blockForce2fa = computed(() => true)
+  const blockForce2fa = computed(() => false)
   const showUpgradeToUseForce2fa = (..._args: any[]) => {}
 
-  const isEEFeatureBlocked = computed(() => true)
+  const isEEFeatureBlocked = computed(() => false)
 
-  const showEEFeatures = computed(() => false)
+  const showEEFeatures = computed(() => true)
 
-  const blockWorkspaceCreate = computed(() => true)
+  const blockWorkspaceCreate = computed(() => false)
 
   const blockWorkspaceMembers = computed(() => false)
 
@@ -340,49 +338,49 @@ export const useEeConfig = createSharedComposable(() => {
 
   const showUpgradeForEEFeature = (..._args: any[]) => {}
 
-  const blockSSO = computed(() => true)
+  const blockSSO = computed(() => false)
 
   const showUpgradeToUseSSO = (..._args: any[]) => {}
 
-  const blockScim = computed(() => true)
+  const blockScim = computed(() => false)
 
   const showUpgradeToUseScim = (..._args: any[]) => {}
 
-  const blockMssql = computed(() => true)
+  const blockMssql = computed(() => false)
 
   const showUpgradeToUseMssql = (..._args: any[]) => {}
 
-  const blockWhiteLabel = computed(() => true)
+  const blockWhiteLabel = computed(() => false)
 
   const showUpgradeToUseWhiteLabel = (..._args: any[]) => {}
 
   const showUpgradeToUseAudit = (..._args: any[]) => {}
 
-  const blockTrashSettings = computed(() => true)
+  const blockTrashSettings = computed(() => false)
 
   const showUpgradeToUseTrashSettings = (..._args: any[]) => {}
 
-  const blockFormGridLayout = computed(() => true)
+  const blockFormGridLayout = computed(() => false)
 
   const showUpgradeToUseFormGridLayout = (..._args: any[]) => {}
 
-  const blockSnapshots = computed(() => true)
+  const blockSnapshots = computed(() => false)
 
   const showUpgradeToUseSnapshots = (..._args: any[]) => {}
 
-  const blockCustomUrls = computed(() => true)
+  const blockCustomUrls = computed(() => false)
 
   const showUpgradeToUseCustomUrls = (..._args: any[]) => {}
 
-  const blockScripts = computed(() => true)
+  const blockScripts = computed(() => false)
 
   const showUpgradeToUseScripts = (..._args: any[]) => {}
 
-  const blockWorkflows = computed(() => true)
+  const blockWorkflows = computed(() => false)
 
   const showUpgradeToUseWorkflows = (..._args: any[]) => {}
 
-  const blockBookmarks = computed(() => true)
+  const blockBookmarks = computed(() => false)
 
   const showUpgradeToUseBookmarks = (..._args: any[]) => {}
 

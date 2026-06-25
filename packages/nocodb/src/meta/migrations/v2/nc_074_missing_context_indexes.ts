@@ -1,15 +1,11 @@
 import type { Knex } from 'knex';
 import { MetaTable } from '~/utils/globals';
-import { isEE } from '~/utils';
-
 const up = async (knex: Knex) => {
   console.time('nc_074_missing_context_indexes');
 
-  if (!isEE) {
-    await knex.schema.alterTable(MetaTable.COL_BUTTON, (table) => {
-      table.string('fk_workspace_id', 20);
-    });
-  }
+  await knex.schema.alterTable(MetaTable.COL_BUTTON, (table) => {
+    table.string('fk_workspace_id', 20);
+  });
 
   await knex.schema.alterTable(MetaTable.COL_BUTTON, (table) => {
     table.index('fk_column_id');
@@ -36,11 +32,9 @@ const up = async (knex: Knex) => {
 };
 
 const down = async (knex) => {
-  if (!isEE) {
-    await knex.schema.alterTable(MetaTable.COL_BUTTON, (table) => {
-      table.dropColumn('fk_workspace_id');
-    });
-  }
+  await knex.schema.alterTable(MetaTable.COL_BUTTON, (table) => {
+    table.dropColumn('fk_workspace_id');
+  });
 
   await knex.schema.alterTable(MetaTable.COL_BUTTON, (table) => {
     table.dropIndex('fk_column_id');

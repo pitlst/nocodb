@@ -21,11 +21,11 @@ export function useWorkspaceTabVisibility(
 
   // Workspace-level SSO is cloud-only for now (on-prem uses instance-level SSO)
   const isWorkspaceSsoAvail = computed(() => {
-    return isEeUI && appInfo.value?.isCloud && !!getFeature(PlanFeatureTypes.FEATURE_SSO)
+    return appInfo.value?.isCloud && !!getFeature(PlanFeatureTypes.FEATURE_SSO)
   })
 
   const hasTeamsEditPermission = computed(() => {
-    return isEeUI && isTeamsEnabled.value && (isAdmin.value || isUIAllowed('teamCreate'))
+    return isTeamsEnabled.value && (isAdmin.value || isUIAllowed('teamCreate'))
   })
 
   const wsTabVisibility = computed(() => {
@@ -35,17 +35,16 @@ export function useWorkspaceTabVisibility(
 
     return {
       collaborators: isAdmin.value || isUIAllowed('workspaceCollaborators'),
-      teams: isEeUI && hasTeamsEditPermission.value && showEEFeatures.value,
+      teams: hasTeamsEditPermission.value && showEEFeatures.value,
       integrations: !isMobileMode.value && isUIAllowed('workspaceIntegrations'),
       billing:
         !isMobileMode.value &&
         !isAdmin.value &&
-        isEeUI &&
         !ws.value?.fk_org_id &&
         isPaymentEnabled.value &&
         isBaseRolesLoaded.value &&
         isUIAllowed('workspaceBilling'),
-      audits: !isMobileMode.value && !isAdmin.value && isEeUI && isBaseRolesLoaded.value && isUIAllowed('workspaceAuditList'),
+      audits: !isMobileMode.value && !isAdmin.value && isBaseRolesLoaded.value && isUIAllowed('workspaceAuditList'),
       sso:
         !isMobileMode.value &&
         isWorkspaceSsoAvail.value &&

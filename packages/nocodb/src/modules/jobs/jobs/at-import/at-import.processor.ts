@@ -150,8 +150,7 @@ export class AtImportProcessor {
       ncParentAuditId: parentAuditId,
     } as NcRequest;
 
-    if (Noco.isEE()) {
-      await Audit.insert(
+    await Audit.insert(
         await generateAuditV1Payload<AirtableImportPayload>(
           AuditV1OperationTypes.AIRTABLE_IMPORT,
           {
@@ -2783,8 +2782,7 @@ export class AtImportProcessor {
         await generateMigrationStats(aTblSchema);
       }
     } catch (e) {
-      if (Noco.isEE()) {
-        await Audit.insert(
+      await Audit.insert(
           await generateAuditV1Payload<AirtableImportFailPayload>(
             AuditV1OperationTypes.AIRTABLE_IMPORT_ERROR,
             {

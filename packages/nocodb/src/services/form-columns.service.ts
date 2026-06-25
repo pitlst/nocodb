@@ -144,11 +144,7 @@ export class FormColumnsService {
     },
     _ncMeta?: MetaService,
   ) {
-    // Grid layout is an EE feature. CE builds and unlicensed on-prem fall
-    // through here (the EE @EEOnly override is skipped when unlicensed).
-    if (!Noco.isEE()) {
-      NcError.notImplemented('Form grid layout');
-    }
+    // Grid layout should always be supported
 
     if (context.schema_locked) {
       NcError.get(context).schemaLocked();

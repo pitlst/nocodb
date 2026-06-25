@@ -27,9 +27,7 @@ import { invalidateSingleQueryCacheForModels } from '~/helpers/metaCacheInvalida
  * for non-rename column updates (frequent path) — it only reaches direct
  * referrers, which is sufficient when no physical name changed.
  *
- * Single-query caching is EE-only — `View.clearSingleQueryCache` no-ops in CE.
- * The public functions short-circuit on `!Noco.isEE()` so the discovery
- * metaList2 queries don't run in CE either.
+ * Single-query caching invalidator.
  *
  * Scope: only relation / Lookup / Rollup columns embed another model's physical
  * names in the compiled SQL, so those are the column types walked. Formula
@@ -59,8 +57,6 @@ export async function clearSingleQueryCacheForReferencingModels(
   modelId: string,
   ncMeta = Noco.ncMeta,
 ) {
-  if (!Noco.isEE()) return;
-
   // Seed: relation columns whose *related* (target) model is the renamed table.
   // The relation column (`fk_column_id`) lives on the referencing model, so its
   // compiled SQL joins the renamed physical table directly. Used both as seed
@@ -117,8 +113,6 @@ export async function clearSingleQueryCacheForRenamedColumnReferences(
   oldCol: Column,
   ncMeta = Noco.ncMeta,
 ) {
-  if (!Noco.isEE()) return;
-
   // Far side of relations whose physical FK column is oldCol — their JOIN ON
   // clause embeds the column name. (FK-rename transitive propagation is out of
   // scope; only the direct far-side model is reached.)
@@ -176,8 +170,6 @@ export async function clearSingleQueryCacheForColumnReferences(
   oldCol: Column,
   ncMeta = Noco.ncMeta,
 ) {
-  if (!Noco.isEE()) return;
-
   // Far side of relations whose physical FK column is oldCol — their JOIN
   // embeds the column name.
   const refTableIds = await loadFarSideModelIdsForFkColumn(

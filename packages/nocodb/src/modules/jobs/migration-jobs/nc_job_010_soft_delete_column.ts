@@ -12,7 +12,6 @@ import type CustomKnex from '~/db/CustomKnex';
 import { Column, Model, Source } from '~/models';
 import { MetaTable } from '~/utils/globals';
 import SimpleLRUCache from '~/utils/cache';
-import { isEE } from '~/utils';
 import NcConnectionMgrv2 from '~/utils/common/NcConnectionMgrv2';
 import ProjectMgrv2 from '~/db/sql-mgr/v2/ProjectMgrv2';
 import {
@@ -340,7 +339,6 @@ export class SoftDeleteColumnMigration {
 
     const needsDeletedCol = !model.columns.find((c) => isDeletedCol(c));
     const needsMetaCol =
-      isEE &&
       source.type === 'pg' &&
       !model.columns.find((c) => c.uidt === UITypes.Meta);
     const needsOoUniqueDrop = v1OoFkColIds.size > 0;
