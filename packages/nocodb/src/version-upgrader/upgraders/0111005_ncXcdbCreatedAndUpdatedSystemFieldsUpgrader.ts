@@ -377,14 +377,11 @@ export default async function ({ ncMeta }: NcUpgraderCtx) {
           eq: 1,
         },
       },
-      [
-            {
-              is_local: {
-                eq: 1,
-              },
-            },
-          ]
-        : []),
+      {
+        is_local: {
+          eq: 1,
+        },
+      },
     ],
   });
 

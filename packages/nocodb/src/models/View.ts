@@ -1894,7 +1894,7 @@ export default class View implements ViewType {
       MetaTable.VIEWS,
       {
         uuid: null,
-        { fk_custom_url_id: null },
+        fk_custom_url_id: null,
       },
       viewId,
     );
@@ -1903,7 +1903,7 @@ export default class View implements ViewType {
 
     await NocoCache.update(context, `${CacheScope.VIEW}:${viewId}`, {
       uuid: null,
-      { fk_custom_url_id: null },
+      fk_custom_url_id: null,
     });
   }
 

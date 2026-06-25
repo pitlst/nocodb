@@ -151,20 +151,19 @@ export class AtImportProcessor {
     } as NcRequest;
 
     await Audit.insert(
-        await generateAuditV1Payload<AirtableImportPayload>(
-          AuditV1OperationTypes.AIRTABLE_IMPORT,
-          {
-            context,
-            details: {
-              airtable_sync_id: syncDB.syncId,
-              ...transformToSnakeCase(extractNonSystemProps(syncDB.options)),
-            },
-            req,
-            id: parentAuditId,
+      await generateAuditV1Payload<AirtableImportPayload>(
+        AuditV1OperationTypes.AIRTABLE_IMPORT,
+        {
+          context,
+          details: {
+            airtable_sync_id: syncDB.syncId,
+            ...transformToSnakeCase(extractNonSystemProps(syncDB.options)),
           },
-        ),
-      );
-    }
+          req,
+          id: parentAuditId,
+        },
+      ),
+    );
 
     const sMapEM = new EntityMap('aTblId', 'ncId', 'ncName', 'ncParent');
     await sMapEM.init();
@@ -2783,20 +2782,19 @@ export class AtImportProcessor {
       }
     } catch (e) {
       await Audit.insert(
-          await generateAuditV1Payload<AirtableImportFailPayload>(
-            AuditV1OperationTypes.AIRTABLE_IMPORT_ERROR,
-            {
-              context,
-              details: {
-                airtable_sync_id: syncDB.syncId,
-                error: e?.message,
-              },
-              req,
-              id: parentAuditId,
+        await generateAuditV1Payload<AirtableImportFailPayload>(
+          AuditV1OperationTypes.AIRTABLE_IMPORT_ERROR,
+          {
+            context,
+            details: {
+              airtable_sync_id: syncDB.syncId,
+              error: e?.message,
             },
-          ),
-        );
-      }
+            req,
+            id: parentAuditId,
+          },
+        ),
+      );
 
       // delete tables that were created
       for (const table of ncSchema.tables) {
